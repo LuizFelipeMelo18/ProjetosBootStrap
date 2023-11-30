@@ -7,210 +7,97 @@
     <title>Dashboard Administrativo</title>
 </head>
 <body>
-
-<!-- Barra de Navegação -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Dashboard Administrativo</a>
-    </div>
-</nav>
-
-<!-- Conteúdo do Dashboard -->
-<div class="container mt-3">
-    <!-- Cards Informativos -->
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Usuários Registrados</h5>
-                    <p class="card-text" id="userCount">0</p>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                        Adicionar Usuário
-                    </button>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Dashboard Administrativo</a>
+        </div>
+    </nav>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuários Registrados</h5>
+                        <p class="card-text" id="userCount">0</p>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                            Adicionar Usuário
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Vendas Totais</h5>
+                        <p class="card-text" id="totalSales">0</p>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSaleModal">
+                            Adicionar Venda
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Vendas por Usuário</h5>
+                        <ul class="list-group" id="salesPerUserList">
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Vendas Totais</h5>
-                    <p class="card-text" id="totalSales">0</p>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addSaleModal">
-                        Adicionar Venda
-                    </button>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <canvas id="salesChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Adicionar Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nome de Usuário</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Adicionar Usuário</button>
+                    </form>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Vendas por Usuário</h5>
-                    <ul class="list-group" id="salesPerUserList">
-                        <!-- Lista de vendas por usuário será adicionada dinamicamente -->
-                    </ul>
+    </div>
+    <div class="modal fade" id="addSaleModal" tabindex="-1" aria-labelledby="addSaleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSaleModalLabel">Adicionar Venda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addSaleForm">
+                        <div class="mb-3">
+                            <label for="userSelect" class="form-label">Selecione o Usuário</label>
+                            <select class="form-control" id="userSelect" required>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="saleAmount" class="form-label">Valor da Venda</label>
+                            <input type="number" class="form-control" id="saleAmount" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Adicionar Venda</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Gráfico -->
-    <div class="row mt-3">
-        <div class="col-md-12">
-            <canvas id="salesChart" width="400" height="200"></canvas>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para Adicionar Usuário -->
-<div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Adicionar Usuário</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addUserForm">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Nome de Usuário</label>
-                        <input type="text" class="form-control" id="username" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Adicionar Usuário</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal para Adicionar Venda -->
-<div class="modal fade" id="addSaleModal" tabindex="-1" aria-labelledby="addSaleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addSaleModalLabel">Adicionar Venda</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="addSaleForm">
-                    <div class="mb-3">
-                        <label for="userSelect" class="form-label">Selecione o Usuário</label>
-                        <select class="form-control" id="userSelect" required>
-                            <!-- Opções de usuários serão adicionadas dinamicamente -->
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="saleAmount" class="form-label">Valor da Venda</label>
-                        <input type="number" class="form-control" id="saleAmount" required>
-                    </div>
-                    <button type="submit" class="btn btn-success">Adicionar Venda</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var users = [];
-    var totalSales = 0;
-    var salesPerUser = {};
-
-    // Dados iniciais para o gráfico
-    var chartData = {
-        labels: [],
-        datasets: [{
-            label: 'Vendas por Usuário',
-            data: [],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }]
-    };
-
-    // Inicializar o gráfico
-    var ctx = document.getElementById('salesChart').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: chartData,
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    // Preencher o seletor de usuários no formulário de adicionar venda
-    function fillUserSelector() {
-        var userSelect = document.getElementById('userSelect');
-        userSelect.innerHTML = '';
-        users.forEach(function (user) {
-            var option = document.createElement('option');
-            option.value = user;
-            option.textContent = user;
-            userSelect.appendChild(option);
-        });
-    }
-
-    // Preencher a lista de vendas por usuário
-    function fillSalesPerUserList() {
-        var salesPerUserList = document.getElementById('salesPerUserList');
-        salesPerUserList.innerHTML = '';
-        users.forEach(function (user) {
-            var listItem = document.createElement('li');
-            listItem.className = 'list-group-item';
-            listItem.textContent = user + ': ' + (salesPerUser[user] || 0).toFixed(2);
-            salesPerUserList.appendChild(listItem);
-        });
-    }
-
-    // Evento de envio do formulário para adicionar usuário
-    document.getElementById('addUserForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        var username = document.getElementById('username').value;
-        users.push(username);
-        fillUserSelector();
-        fillSalesPerUserList();
-        userCount++;
-        updateDashboard();
-        $('#addUserModal').modal('hide');
-    });
-
-    // Evento de envio do formulário para adicionar venda
-    document.getElementById('addSaleForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-        var username = document.getElementById('userSelect').value;
-        var saleAmount = parseFloat(document.getElementById('saleAmount').value);
-
-        if (!salesPerUser[username]) {
-            salesPerUser[username] = 0;
-        }
-
-        totalSales += saleAmount;
-        salesPerUser[username] += saleAmount;
-
-        fillSalesPerUserList();
-        updateDashboard();
-        $('#addSaleModal').modal('hide');
-    });
-
-    // Função para atualizar os elementos do dashboard
-    function updateDashboard() {
-        document.getElementById('userCount').innerText = users.length;
-        document.getElementById('totalSales').innerText = totalSales.toFixed(2);
-
-        // Atualizar dados do gráfico
-        chartData.labels = users;
-        chartData.datasets[0].data = users.map(function (user) {
-            return salesPerUser[user] || 0;
-        });
-
-        myChart.update();
-    }
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
